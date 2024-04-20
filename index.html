@@ -51,6 +51,11 @@
             document.getElementById('loginForm').style.display = 'none';
             document.getElementById('tutoriasPage').style.display = 'block';
         }
+
+        function showTutoriasInfo() {
+            document.getElementById('mainInfo').style.display = 'none';
+            document.getElementById('tutoriasInfo').style.display = 'block';
+        }
     </script>
 </head>
 <body>
@@ -75,48 +80,51 @@
         <h1>Tutorías Académicas UVG</h1>
     </header>
 
-    <main>
-        <p>Accede a tutorías de calidad para mejorar tu rendimiento académico.</p>
+    <div id="mainInfo">
+        <main>
+            <p>Accede a tutorías de calidad para mejorar tu rendimiento académico.</p>
 
-        <button>Agenda tutoría</button>
+            <button onclick="showTutoriasInfo()">Agenda tutoría</button>
 
-        <p>★★★★★ Alumnos satisfechos</p>
+            <p>★★★★★ Alumnos satisfechos</p>
 
-        <blockquote>"Las tutorías me han ayudado a mejorar mis calificaciones!" - Juan López</blockquote>
-    </main>
+            <blockquote>"Las tutorías me han ayudado a mejorar mis calificaciones!" - Juan López</blockquote>
+        </main>
+    </div>
 
-    <header>
-        <h1>Gestión de Tutorías</h1>
-    </header>
+    <div id="tutoriasInfo" style="display: none;">
+        <header>
+            <h1>Gestión de Tutorías</h1>
+        </header>
 
-    <main>
-        <ul>
-            <li>1. Química</li>
-            <li>2. Pensamiento</li>
-            <li>3. Ciencias de la vida</li>
-            <li>4. Física</li>
-            <li>5. Cálculo 1</li>
-            <li>6. Comunicación Efectiva</li>
-        </ul>
+        <main>
+            <ul>
+                <li>1. Química</li>
+                <li>2. Pensamiento</li>
+                <li>3. Ciencias de la vida</li>
+                <li>4. Física</li>
+                <li>5. Cálculo 1</li>
+                <li>6. Comunicación Efectiva</li>
+            </ul>
 
-        <div class="tutorias">
-            <h2>Tutorías de Química</h2>
-            <p>Horarios disponibles: 8:30 - 9:30 | 10:50 - 11:00 | 13:40 - 14:40 | 17:00 - 18:00</p>
-            <p>Tutores Disponibles: Juan López, Jaxin Andrade</p>
-            <p>Contactos: 4125 5048 | 2005 4050</p>
-        </div>
+            <div class="tutorias">
+                <h2>Tutorías de Química</h2>
+                <p>Horarios disponibles: 8:30 - 9:30 | 10:50 - 11:00 | 13:40 - 14:40 | 17:00 - 18:00</p>
+                <p>Tutores Disponibles: Juan López, Jaxin Andrade</p>
+                <p>Contactos: 4125 5048 | 2005 4050</p>
+            </div>
 
-        <div class="tutorias">
-            <h2>Tutorías de Pensamiento</h2>
-            <p>Horarios disponibles: 8:30 - 9:30 | 10:50 - 11:50 | 13:40 - 14:40 | 17:00 - 19:00</p>
-            <p>Tutores Disponibles: Lorena Solarzar, Diego Lorenzana</p>
-            <p>Contactos: 5011 4301 | 6125 9501</p>
-        </div>
+            <div class="tutorias">
+                <h2>Tutorías de Pensamiento</h2>
+                <p>Horarios disponibles: 8:30 - 9:30 | 10:50 - 11:50 | 13:40 - 14:40 | 17:00 - 19:00</p>
+                <p>Tutores Disponibles: Lorena Solarzar, Diego Lorenzana</p>
+                <p>Contactos: 5011 4301 | 6125 9501</p>
+            </div>
 
-        <img src="owl.png" alt="Imagen de un búho">
-    </main>
+            
+        </main>
+    </div>
 
-    <footer></footer>
 </div>
 
 </body>
