@@ -1,33 +1,22 @@
 import pandas as pd
 import os
 
+# Leer el archivo CSV de tutores
+tutorias = pd.read_csv("clases.csv")
+
 # Definición de la función para obtener los horarios disponibles para un curso específico
-def obtener_horarios_disponibles(curso):
-    horarios_por_curso = {
-        "1": ["Lunes 8:30 - 9:30", "Miércoles 10:50 - 11:00 ","Jueves 13:40 - 14:40 ", "Viernes 17:00 - 18:00" ],
-        "2": ["Martes 8:30 - 9:30", "Miércoles 10:50 - 11:50", "Jueves 13:40 - 14:40", "Viernes 18:00 - 19:00"  ],
-        "3": ["Lunes 8:30 - 9:30", "Martes 10:50 - 11:50", "Jueves 13:40 - 14:40", "Viernes 18:00 - 19:00"  ],
-        "4": ["Martes 10:00 - 11:00", "Miércoles 12:00 - 13:00", "Viernes 15:00 - 16:00", "Viernes 17:50 - 18:50"  ],
-        "5": ["Lunes 13:00 - 14:00", "Martes 09:00 - 10:00", "Miércoles 11:00 - 12:00", "Viernes 14:00 - 15:00"  ],
-        "6": ["Martes 8:00 - 10:00", "Miércoles 11:00 - 12:00", "Jueves 12:00 - 13:00", "Viernes 15:30 - 17:30"  ],
-    }
-    return horarios_por_curso.get(curso, [])
+def horarios(curso):
+    horarios = tutorias[tutorias['clases'] == curso]['horario'].unique()
+    return list(horarios)
 
-def obtener_tutores_disponibles(curso):
-    tutores_disponibles = {
-        "1": ["Juan López", "Jaxin Andrade"],   
-        "2": ["Lorena Solarzar", "Diego Lorenzana"],
-        "3": ["Dionisio Pérez", "Luisa Hernandez"],
-        "4": ["Santiago López", "Javier Sánchez"],
-        "5": ["Sebastían Rodas", "José Pérez"],
-        "6": ["Santiago Sánchez", "Andrés Salazar"]
-    }
-    return tutores_disponibles.get(curso, [])
+def tutores(curso, horario):
+    tutores = tutorias[(tutorias['clases'] == curso) & (tutorias['horario'] == horario)]
+    return tutores[['tutor', 'correo', 'telefono', 'aniocarrera', 'carrera', 'informacionadicional']]
 
-def registrar_tutoria(nombre, carnet, curso, horario, tutor):
+def registro(nombre, carnet, curso, horario, tutor):
     # Nombre del archivo CSV basado en curso, tutor y horario
     filename = f"{curso}_{tutor}_{horario.replace(':', '').replace(' ', '_')}.csv"
-
+    
     # Crear DataFrame con la información del registro
     df = pd.DataFrame([{"Curso": curso, "Tutor": tutor, "Horario": horario, "Nombre": nombre, "Carnet": carnet}])
 
@@ -40,39 +29,42 @@ def registrar_tutoria(nombre, carnet, curso, horario, tutor):
     print(f"Registro guardado en {filename}")
 
 # Lista de cursos disponibles
-cursos_disponibles = {"1": "Química", "2": "Pensamiento Cuantitativo", "3": "Ciencias de la vida", "4": "Física", "5": "Cálculo 1", "6": "Comunicación efectiva" }
+cursos = tutorias['clases'].unique()
+cursos_lista = {str(i+1): curso for i, curso in enumerate(cursos)}
 
 print("Cursos disponibles:")
-for key, value in cursos_disponibles.items():
+for key, value in cursos_lista.items():
     print(f"{key}: {value}")
 
 # Solicitar y validar el curso elegido
-curso_elegido = input("Ingrese el número del curso al que desea asignarse: ")
-while curso_elegido not in cursos_disponibles:
+curso_elegir = input("Ingrese el número del curso al que desea asignarse: ")
+while curso_elegir not in cursos_lista:
     print("Curso no válido. Intente de nuevo.")
-    curso_elegido = input("Ingrese el número del curso al que desea asignarse: ")
+    curso_elegido_key = input("Ingrese el número del curso al que desea asignarse: ")
+
+curso_elegido = cursos_lista[curso_elegir]
 
 # Obtener y mostrar los horarios disponibles para el curso seleccionado
-horarios_disponibles = obtener_horarios_disponibles(curso_elegido)
+horarios = horarios(curso_elegido)
 print("Horarios disponibles:")
-for i, horario in enumerate(horarios_disponibles, 1):
+for i, horario in enumerate(horarios, 1):
     print(f"{i}: {horario}")
 
-horario_elegido = int(input("Seleccione el número del horario al que desea inscribirse: "))
-horario_elegido = horarios_disponibles[horario_elegido - 1]
+horario_selec = int(input("Seleccione el número del horario al que desea inscribirse: "))
+horario_elegido = horarios[horario_selec - 1]
 
-# Obtener y mostrar los tutores disponibles para el curso seleccionado
-tutores_disponibles = obtener_tutores_disponibles(curso_elegido)
+# Obtener y mostrar los tutores disponibles para el curso y horario seleccionados
+tutores = tutores(curso_elegido, horario_elegido)
 print("Tutores disponibles:")
-for i, tutor in enumerate(tutores_disponibles, 1):
-    print(f"{i}: {tutor}")
+for i, row in enumerate(tutores.itertuples(), 1):
+    print(f"{i}: {row.tutor} (Correo: {row.correo}, Teléfono: {row.telefono}, Año de carrera: {row.aniocarrera}, Carrera: {row.carrera}, Información adicional: {row.informacionadicional})")
 
-tutor_elegido = int(input("Seleccione el número del tutor al que desea inscribirse: "))
-tutor_elegido = tutores_disponibles[tutor_elegido - 1]
+tutor_selec = int(input("Seleccione el número del tutor al que desea inscribirse: "))
+tutor_elegido = tutores.iloc[tutor_selec- 1]['tutor']
 
 # Solicitar la información del usuario
 nombre_usuario = input("Ingrese su nombre completo: ")
 carnet_usuario = input("Ingrese su número de carnet: ")
 
 # Registrar la tutoría en el archivo CSV correspondiente
-registrar_tutoria(nombre_usuario, carnet_usuario, cursos_disponibles[curso_elegido], horario_elegido, tutor_elegido)
+registro(nombre_usuario, carnet_usuario, curso_elegido, horario_elegido, tutor_elegido)
