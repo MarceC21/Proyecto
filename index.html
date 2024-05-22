@@ -88,6 +88,7 @@
 
 <div id="loginForm" class="container">
     <h2>Bienvenido a Tutorías Académicas UVG</h2>
+    <form action="/login" method="POST"></form>
     <label for="uname"><b>Usuario</b></label>
     <input type="text" placeholder="Ingresa Usuario" name="uname" required>
 
@@ -177,7 +178,7 @@
 
     <div id="contactForm" style="display: none;">
         <h2>Información de Contacto</h2>
-        <form onsubmit="showGraciasMessage(); return false;">
+        <form action="/submit" method="POST">
             <label for="tutor"><b>Selecciona un Tutor</b></label>
             <select name="tutor" id="tutor">
                 <option value="Juan López">Juan López</option>
