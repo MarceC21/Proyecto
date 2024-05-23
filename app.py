@@ -26,7 +26,7 @@ def registro(nombre, carnet, curso, horario, tutor):
 # Ruta para mostrar el formulario
 @app.route('/')
 def index():
-    return render_template('PaginaWeb.html')
+    return render_template('index.html')
 
 
 # Donde obtiene los datos del html
