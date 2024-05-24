@@ -1,10 +1,9 @@
-from flask import Flask, request, render_template, redirect, url_for, session
+from flask import Flask, request, render_template, redirect, url_for
 import pandas as pd
-import os
 import csv
+import os
 from funciones import * 
 app = Flask(__name__)
-
 
 #Funcion de registro a una tutoria
 def registro(nombre, carnet, curso, horario, tutor):
@@ -12,13 +11,13 @@ def registro(nombre, carnet, curso, horario, tutor):
     filename = f"{curso}_{tutor}_{horario.replace(':', '').replace(' ', '_')}.csv"
     
     # Crear DataFrame con la información del registro
-    df = pd.DataFrame([{"Curso": curso, "Tutor": tutor, "Horario": horario, "Nombre": nombre, "Carnet": carnet}])
+    tutorias = pd.DataFrame([{"Curso": curso, "Tutor": tutor, "Horario": horario, "Nombre": nombre, "Carnet": carnet}])
 
     # Si el archivo existe, append al archivo existente
     if os.path.isfile(filename):
-        df.to_csv(filename, mode='a', header=False, index=False)
+        tutorias.to_csv(filename, mode='a', header=False, index=False)
     else:
-        df.to_csv(filename, mode='w', header=True, index=False)
+        tutorias.to_csv(filename, mode='w', header=True, index=False)
     
     print(f"Registro guardado en {filename}")
 
@@ -26,7 +25,7 @@ def registro(nombre, carnet, curso, horario, tutor):
 # Ruta para mostrar el formulario
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('PaginaWeb.html')
 
 
 # Donde obtiene los datos del html
@@ -38,11 +37,9 @@ def submit():
         carnet = request.form.get('carnet')
         tutor = request.form.get('tutor')
         horario = request.form.get('horario')
-
-        curso=request.form.get('mainInfo')
+        curso=request.form.get('curso')
         # Guardar los datos en un archivo CSV
         registro(nombre, carnet, curso, horario, tutor)
-        
         
         return redirect(url_for('gracias'))
 
