@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal UVG</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px 0px #000;
+        }
+        input[type=text], input[type=password], input[type=email] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+<div id="loginForm" class="container">
+    <h2>Bienvenido a Tutorías Académicas UVG</h2>
+    <form action="/" method="POST">
+        <label for="uname"><b>Usuario</b></label>
+        <input type="text" placeholder="Ingresa Usuario" name="uname" required>
+
+        <label for="psw"><b>Contraseña</b></label>
+        <input type="password" placeholder="Ingresa Contraseña" name="psw" required>
+
+        <label for="email"><b>Correo Electrónico</b></label>
+        <input type="email" placeholder="Ingresa Correo Electrónico" name="email" required>
+
+        <button type="submit">Iniciar Sesión</button>
+        <label>
+            <input type="checkbox" checked="checked" name="remember"> Recordarme
+        </label>
+        {% if mensaje %}
+        <p style="color:red;">{{ mensaje }}</p>
+        {% endif %}
+    </form>
+</div>
+</body>
+</html>
