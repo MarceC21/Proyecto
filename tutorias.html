@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal UVG - Tutorías</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px 0px #000;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            opacity: 0.8;
+        }
+    </style>
+    <script>
+        const tutoresYHorarios = {
+            quimica: {
+                tutores: ['Juan López', 'Jaxin Andrade'],
+                horarios: ['8:30 - 9:30', '10:50 - 11:00', '13:40 - 14:40', '17:00 - 18:00']
+            },
+            pensamiento: {
+                tutores: ['Lorena Solarzar', 'Diego Lorenzana'],
+                horarios: ['8:30 - 9:30', '10:50 - 11:50', '13:40 - 14:40', '17:00 - 19:00']
+            },
+            ciencias: {
+                tutores: ['Dionisio Pérez', 'Luisa Hernandez'],
+                horarios: ['8:30 - 9:30', '10:50 - 11:50', '13:40 - 14:40', '17:00 - 19:00']
+            },
+            fisica: {
+                tutores: ['Santiago López', 'Javier Sánchez'],
+                horarios: ['15:00 - 16:00', '10:00 - 11:00', '17:50 - 18:50', '12:00 - 13:00']
+            },
+            calculo: {
+                tutores: ['Sebastián Rodas', 'José Pérez'],
+                horarios: ['14:00 - 15:00', '11:00 - 12:00', '09:00 - 10:00', '13:00 - 14:00']
+            },
+            comunicacion: {
+                tutores: ['Santiago Sánchez', 'Andrés Salazar'],
+                horarios: ['8:00 - 10:00', '11:00 - 12:00', '12:00 - 13:00', '15:30 - 17:30']
+            }
+        };
+
+        function showTutoriasInfo(materia) {
+            document.getElementById('mainInfo').style.display = 'none';
+            document.querySelectorAll('.materia').forEach(function(materiaDiv) {
+                materiaDiv.style.display = 'none';
+            });
+            document.getElementById(materia).style.display = 'block';
+        }
+
+        function showMainInfo() {
+            document.querySelectorAll('.materia').forEach(function(materiaDiv) {
+                materiaDiv.style.display = 'none';
+            });
+            document.getElementById('mainInfo').style.display = 'block';
+        }
+
+        function showContactForm(materia, tutor, horario) {
+            document.getElementById('selectedTutor').value = tutor;
+            document.getElementById('selectedHorario').value = horario;
+            document.getElementById('selectedCurso').value = materia; // Agrega el nombre del curso
+            document.getElementById('tutorInfo').style.display = 'none';
+            document.getElementById('contactForm').style.display = 'block';
+            updateContactFormOptions(materia, tutor, horario);
+        }
+
+        function updateContactFormOptions(materia, selectedTutor, selectedHorario) {
+            const tutorSelect = document.getElementById('tutor');
+            const horarioSelect = document.getElementById('horario');
+            const options = tutoresYHorarios[materia];
+
+            tutorSelect.innerHTML = options.tutores.map(tutor => `<option value="${tutor}">${tutor}</option>`).join('');
+            horarioSelect.innerHTML = options.horarios.map(horario => `<option value="${horario}">${horario}</option>`).join('');
+
+            tutorSelect.value = selectedTutor;
+            horarioSelect.value = selectedHorario;
+        }
+    </script>
+</head>
+<body>
+<div id="tutoriasPage">
+    <header id="headerTutorias">
+        <h1>Tutorías Académicas UVG</h1>
+    </header>
+
+    <div id="mainInfo">
+        <main>
+            <p>Accede a tutorías de calidad para mejorar tu rendimiento académico.</p>
+
+            <button onclick="showTutoriasInfo('quimica')">1. Química</button>
+            <button onclick="showTutoriasInfo('pensamiento')">2. Pensamiento</button>
+            <button onclick="showTutoriasInfo('ciencias')">3. Ciencias de la Vida</button>
+            <button onclick="showTutoriasInfo('fisica')">4. Física</button>
+            <button onclick="showTutoriasInfo('calculo')">5. Cálculo 1</button>
+            <button onclick="showTutoriasInfo('comunicacion')">6. Comunicación Efectiva</button>
+
+            <p>★★★★★ Alumnos satisfechos</p>
+
+            <blockquote>"Las tutorías me han ayudado a mejorar mis calificaciones!" - Juan López</blockquote>
+        </main>
+    </div>
+
+    <div id="quimica" class="materia" style="display: none;">
+        <h2>Horarios disponibles: 8:30 - 9:30 | 10:50 - 11:00 | 13:40 - 14:40 | 17:00 - 18:00</h2>
+        <p>Tutores Disponibles: Juan López, Jaxin Andrade</p>
+        <button onclick="showContactForm('quimica', 'Juan López', '8:30 - 9:30')">Seleccionar Tutoría</button>
+        <button onclick="showMainInfo()">Regresar al menú principal</button>
+    </div>
+
+    <div id="pensamiento" class="materia" style="display: none;">
+        <h2>Horarios disponibles: 8:30 - 9:30 | 10:50 - 11:50 | 13:40 - 14:40 | 17:00 - 19:00</h2>
+        <p>Tutores Disponibles: Lorena Solarzar, Diego Lorenzana</p>
+        <button onclick="showContactForm('pensamiento', 'Lorena Solarzar', '8:30 - 9:30')">Seleccionar Tutoría</button>
+        <button onclick="showMainInfo()">Regresar al menú principal</button>
+    </div>
+
+    <div id="ciencias" class="materia" style="display: none;">
+        <h2>Horarios disponibles: 8:30 - 9:30 | 10:50 - 11:50 | 13:40 - 14:40 | 17:00 - 19:00</h2>
+        <p>Tutores Disponibles: Dionisio Pérez, Luisa Hernandez</p>
+        <button onclick="showContactForm('ciencias', 'Dionisio Pérez', '8:30 - 9:30')">Seleccionar Tutoría</button>
+        <button onclick="showMainInfo()">Regresar al menú principal</button>
+    </div>
+
+    <div id="fisica" class="materia" style="display: none;">
+        <h2>Horarios disponibles: 15:00 - 16:00 | 10:00 - 11:00 | 17:50 - 18:50 | 12:00 - 13:00</h2>
+        <p>Tutores Disponibles: Santiago López, Javier Sánchez</p>
+        <button onclick="showContactForm('fisica', 'Santiago López', '15:00 - 16:00')">Seleccionar Tutoría</button>
+        <button onclick="showMainInfo()">Regresar al menú principal</button>
+    </div>
+
+    <div id="calculo" class="materia" style="display: none;">
+        <h2>Horarios disponibles: 14:00 - 15:00 | 11:00 - 12:00 | 09:00 - 10:00 | 13:00 - 14:00</h2>
+        <p>Tutores Disponibles: Sebastián Rodas, José Pérez</p>
+        <button onclick="showContactForm('calculo', 'Sebastián Rodas', '14:00 - 15:00')">Seleccionar Tutoría</button>
+        <button onclick="showMainInfo()">Regresar al menú principal</button>
+    </div>
+
+    <div id="comunicacion" class="materia" style="display: none;">
+        <h2>Horarios disponibles: 8:00 - 10:00 | 11:00 - 12:00 | 12:00 - 13:00 | 15:30 - 17:30</h2>
+        <p>Tutores Disponibles: Santiago Sánchez, Andrés Salazar</p>
+        <button onclick="showContactForm('comunicacion', 'Santiago Sánchez', '8:00 - 10:00')">Seleccionar Tutoría</button>
+        <button onclick="showMainInfo()">Regresar al menú principal</button>
+    </div>
+
+    <div id="tutorInfo" style="display: none;">
+        <h2>Contacto de Tutoría Seleccionada</h2>
+        <p id="selectedTutor"></p>
+        <p id="selectedHorario"></p>
+        <button onclick="showMainInfo()">Cambiar Tutoría</button>
+    </div>
+
+    <div id="contactForm" style="display: none;">
+        <h2>Información de Contacto</h2>
+        <form action="/submit" method="POST">
+            <label for="tutor"><b>Selecciona un Tutor</b></label>
+            <select name="tutor" id="tutor"></select>
+      
+            <label for="horario"><b>Selecciona un Horario</b></label>
+            <select name="horario" id="horario"></select>
+      
+            <label for="curso"><b>Curso</b></label>
+            <input type="text" id="selectedCurso" name="curso" readonly>
+      
+            <label for="nombre"><b>Nombre Completo</b></label>
+            <input type="text" placeholder="Ingresa Nombre Completo" name="nombre" required>
+      
+            <label for="carnet"><b>Número de Carnet</b></label>
+            <input type="text" placeholder="Ingresa Número de Carnet" name="carnet" required>
+            
+            <button type="submit">Enviar Información</button>
+        </form>
+    </div>
+    
+    <div id="graciasMessage" style="display: none;">
+        <h2>Gracias por enviar la información</h2>
+        <p>Te contactarán en breves para coordinar todo.</p>
+        <button onclick="showMainInfo()">Regresar al menú principal</button>
+    </div>
+
+</div>
+</body>
+</html>
